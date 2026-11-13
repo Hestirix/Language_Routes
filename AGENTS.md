@@ -7,11 +7,12 @@ Indo-European languages using the IE-CoR CLDF dataset.
 ## Stage boundaries
 
 - Work only on the development stage explicitly approved by the user.
-- The currently approved stage is **Stage 1A: Python Environment and Project Foundation**.
-- Stage 1A permits environment setup, dependency setup, project instructions,
-  README documentation, Git exclusions, and read-only Git inspection.
-- Do not create database tables, import data into SQLite, implement search,
-  or build the Streamlit interface during Stage 1A.
+- The currently approved stage is **Stage 1B: SQLite Database Design**.
+- Stage 1B permits the schema, connection utilities, empty database initialization,
+  automated tests using temporary databases, and supporting documentation.
+- Do not import linguistic data, implement search, build the Streamlit interface,
+  or begin mapping during Stage 1B. Synthetic test records are permitted only in
+  temporary test databases; they are not linguistic evidence.
 - Stop after completing the approved stage. Never automatically implement future
   stages. Update this stage note when the user explicitly approves a later stage.
 - Do not create commits, push changes, or change Git remotes without authorization.

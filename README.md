@@ -11,17 +11,21 @@ search algorithms, validation, and visualization.
 
 ## Development status
 
-**Current stage: Stage 1A — Python Environment and Project Foundation.**
+**Current stage: Stage 1B — SQLite Database Design.**
 
 Stage 0 dataset inspection is complete. The repository now contains development
 instructions, environment setup documentation, Git exclusions, and a minimal
 project dependency file. A local Python 3.14.7 virtual environment has been
 created for development, with pandas 3.1.1 and pytest 9.2.0 installed locally.
 
-**The application is not functional yet.** There are no database tables, data
-importer, search functions, Streamlit interface, or maps. No automated application
-tests exist yet; pytest is included to support testing future functionality.
-Each later development stage requires explicit approval.
+Stage 1B adds a nine-table SQLite schema, documented connection utilities, empty
+database initialization, and automated database tests. All eight linguistic source
+tables retain every original CSV column; a separate table is reserved for future
+import history. See [the database design](docs/database_design.md).
+
+**The application is not functional yet.** No linguistic data has been imported.
+There is no dataset importer, word search, Streamlit interface, or map. Each later
+development stage requires explicit approval.
 
 ## Planned functionality
 
@@ -118,8 +122,29 @@ Verify the interpreter, environment isolation, dependencies, and SQLite support:
 .\.venv\Scripts\python.exe -c "import pandas, pytest, sqlite3; print('pandas:', pandas.__version__); print('pytest:', pytest.__version__); print('SQLite:', sqlite3.sqlite_version)"
 ```
 
-These commands check imports and versions; they do not create a database or import
-the linguistic dataset. Run application tests with pytest only after tests exist.
+These commands check package imports and versions; they do not create a database
+or import the linguistic dataset.
+
+## Initialize the database and run tests
+
+From the project root in PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe -m language_routes.database
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+Initialization creates `data/processed/language_routes.sqlite3` with nine empty
+tables on a fresh run. Repeating it preserves existing rows; it does not import,
+clear, or migrate data. An optional `--database .\data\processed\custom.sqlite3`
+argument selects another output path. Paths inside `data/raw` are rejected.
+The default path and schema lookup do not depend on the shell's working directory.
+Run the module command from the project root so Python can find the package.
+
+Tests use temporary databases and synthetic placeholders. The schema uses STRICT
+tables, requiring SQLite 3.37+, and the utilities require Python 3.12+; both are
+supported by the project's verified environment. See
+[database_design.md](docs/database_design.md) for constraints and transaction details.
 
 ### Python launcher troubleshooting
 
@@ -151,11 +176,9 @@ file is not a complete lockfile for every supporting dependency.
 
 ## Git setup status
 
-At the end of Stage 1A, the local branch is `main` and has no commits. The configured
-fetch and push remote is `https://github.com/Hestirix/Language_Routes.git`.
-A read-only remote check succeeded and returned no advertised references,
-consistent with an empty remote repository. The local upstream is configured as
-`origin/main`, which does not exist yet; Git therefore reports it as `[gone]`.
+At the beginning of Stage 1B, the project foundation was committed on `main`,
+tracking `origin/main`, with a clean working tree. The configured fetch and push
+remote is `https://github.com/Hestirix/Language_Routes.git`.
 
 The remote name matches this project, but the developers should confirm that
 `Hestirix/Language_Routes` is the intended GitHub destination before publishing.
@@ -173,5 +196,5 @@ git ls-remote origin
 
 Read [`AGENTS.md`](AGENTS.md) before making changes. Keep Python modules readable,
 document their purpose and important functions, test important functionality, and
-work only on the explicitly approved stage. Dataset importing, database design,
-search, and interface implementation are later work.
+work only on the explicitly approved stage. Dataset importing, search, interface
+implementation, and mapping remain later work.
