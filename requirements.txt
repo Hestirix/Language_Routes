@@ -1,0 +1,8 @@
+# Language Routes — Dennis & Neylan, Engineering in Python
+# Minimal dependencies for upcoming data processing and automated testing.
+# sqlite3 and venv are included with Python; do not install them from PyPI.
+# Streamlit will be added for Stage 3; mapping packages are deferred to Stage 4.
+# Direct dependencies are pinned to the versions installed for Stage 1A.
+# Their supporting dependencies are resolved by pip; this is not a full lockfile.
+pandas==3.1.1
+pytest==9.2.0
